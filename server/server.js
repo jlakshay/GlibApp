@@ -13,11 +13,10 @@ var userNameCheck = require('./routes/userNameCheck');
 var login = require('./routes/login');
 var generalChats = require('./routes/generalChat');
 var messages = require('./routes/messages');
-<<<<<<< HEAD
+
 var users = require('./routes/users');
 
-=======
->>>>>>> 44acfe5b583a1fddbb4efff86beea9e8f7e30e0c
+
 var Server = /** @class */ (function () {
     function Server() {
         this.port = process.env.PORT || 4000;
@@ -36,10 +35,8 @@ var Server = /** @class */ (function () {
         this.app.use('/login', login);
         this.app.use('/generalChats', generalChats);
         this.app.use('/getMessages', messages);
-<<<<<<< HEAD
         this.app.use('/users', users);
-=======
->>>>>>> 44acfe5b583a1fddbb4efff86beea9e8f7e30e0c
+
     };
     /* Including app Routes starts*/
     Server.prototype.includeRoutes = function () {

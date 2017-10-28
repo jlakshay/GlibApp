@@ -78,15 +78,12 @@ else{
                     _this.io.emit('chat-list-response', chatListResponse);
                 }
                 else {
-<<<<<<< HEAD
 
                     helper.getUserInfo(data.userId, function (err, UserInfoResponse) {
                         delete UserInfoResponse.password;
                         console.log(" new  user connected with socket",UserInfoResponse)
-=======
-                    helper.getUserInfo(data.userId, function (err, UserInfoResponse) {
-                        delete UserInfoResponse.password;
->>>>>>> 44acfe5b583a1fddbb4efff86beea9e8f7e30e0c
+
+                    
                         helper.getChatList(socket.id, function (err, response) {
                             _this.io.to(socket.id).emit('chat-list-response', {
                                 error: false,
