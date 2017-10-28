@@ -150,6 +150,7 @@ var Helper = /** @class */ (function () {
             });
         });
     };
+<<<<<<< HEAD
     Helper.prototype.getUsers = function (callback) {
         this.Mongodb.onConnect(function (db, ObjectID) {
             db.collection('users').find({}).toArray(function (err, result) {
@@ -159,6 +160,9 @@ var Helper = /** @class */ (function () {
         });
     };
     
+=======
+    ;
+>>>>>>> 44acfe5b583a1fddbb4efff86beea9e8f7e30e0c
     /*
     * Name of the Method : getMessages
     * Description : To fetch messages from DB between two users.
