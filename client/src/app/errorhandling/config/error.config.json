@@ -1,0 +1,12 @@
+{
+	"errHand" : {
+     "expenseManager":"Expense Manager",
+     "oops":"Oops Could not found",
+     "err":"There's a lot of reasons why this page is",
+     "text" : "Don't waste your time enjoying the look of it",
+     "back":"Back",
+     "follow":"Follow us on:",
+     "design":"© All rights Reseverd | Design by  ",
+     "layout":"layout"
+   }
+}

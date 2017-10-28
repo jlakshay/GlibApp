@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-
+import expressUrls from './config/url';
 import 'rxjs/add/operator/map';
 @Injectable()
 export class RegisterService {
@@ -17,9 +17,8 @@ console.log(this.data);
 public register(): Observable<any>{
 	//let d = localStorage.getItem('tempuser.Email')
 	console.log(this.data.email)
-	const url="http://localhost:3000/register";
 	return this.http
-	.post(url,this.data)
+	.post(expressUrls.register,this.data)
 	.map((res:Response)=>{return res.json(); });
 }
 

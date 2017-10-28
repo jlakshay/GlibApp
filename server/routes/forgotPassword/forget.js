@@ -20,7 +20,7 @@ try
 	           		}else{
 	           			//console.log(result.username)
 	           			verifyForgotPasswordResponse.error = false;
-	           			verifyForgotPasswordResponse.result = result.username;
+	           			verifyForgotPasswordResponse.result = result;
 	            		verifyForgotPasswordResponse.message = `Query Complete`;
 	           			response.status(200).json(verifyForgotPasswordResponse);
 	           		}

@@ -25,8 +25,8 @@ export class MailverificationComponent implements OnInit {
   //verify method
   verify(otp){
    this.mailotp.checkOTP(otp).subscribe((res)=>{
-     this.valid=res._body; console.log(this.valid+" "+res._body)
-     if(res._body=='{"message":true}')
+     this.valid=res.message; //console.log(this.valid)
+     if(this.valid==true)
      {
        
        let comp = this.mailotp.component;
@@ -34,20 +34,20 @@ export class MailverificationComponent implements OnInit {
        this.registerUser.register().subscribe(
          (res)=>{
            console.log(res)
-           if(res.dob==undefined)
+           if(res.error==false)
            {
-             if(res.response=="already exist"){               
+             if(res.message=="Already exist"){               
                // swal('Oops!','You are already registered with us!','info')
                this.route.navigateByUrl("/"+comp);
              }
-             else{
-               // swal('Oops!','Registeration Unsuccessful.','info')
-               this.route.navigateByUrl('/register');
+             else if(res.message=="User registration successful."){
+               // swal('Wohoo!','You are now registered with us!','success')
+               this.route.navigateByUrl("/"+comp);
                }
           }
           else{
-               // swal('Wohoo!','You are now registered with us!','success')
-               this.route.navigateByUrl("/"+comp);
+               // swal('Oops!','Registeration Unsuccessful.','info')
+               this.route.navigateByUrl("/register");
           }
          });
         }else if(comp==="setpassword"){

@@ -27,13 +27,13 @@ import { HttpService } from './../http.service';
    private username = null;
       private email = null;
       private password = null;
- 
+     private userData={};
       private isuserNameAvailable = false;
       private userTypingTimeout= 500;
       private typingTimer = null;
    constructor(
      private mailotp:MailotpService,private chatService : ChatService,
-          private router :Router
+          private router :Router,private registerService :RegisterService
      ) { }
 
 
@@ -67,7 +67,7 @@ import { HttpService } from './../http.service';
         }else if(this.password === ''){
             alert(`Password can't be empty.`);
         }else{
-           this.chatService.registerUser({
+           /*this.chatService.registerUser({
                 username : this.username,
                 email : this.email,
                 password : this.password
@@ -81,7 +81,17 @@ import { HttpService } from './../http.service';
                         alert(`Registration failure.`);
                     }
                 }
-            });
+            });*/
+            this.registerService.tempUser({"email":this.email, "username":this.username, "password":this.password})
+            this.mailotp.sendMailOTP(this.email, "Registeration Verification", "login").subscribe((res)=>{
+
+              if(res.message = "OTP Sent"){
+                this.router.navigateByUrl('/verify')
+
+              }else{
+                alert(`Invalid Email.`)
+              }
+            })
         }
     }
 
