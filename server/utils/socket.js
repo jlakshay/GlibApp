@@ -79,11 +79,13 @@ else{
                 }
                 else {
 
+
+
                     helper.getUserInfo(data.userId, function (err, UserInfoResponse) {
                         delete UserInfoResponse.password;
                         console.log(" new  user connected with socket",UserInfoResponse)
 
-                    
+            
                         helper.getChatList(socket.id, function (err, response) {
                             _this.io.to(socket.id).emit('chat-list-response', {
                                 error: false,
