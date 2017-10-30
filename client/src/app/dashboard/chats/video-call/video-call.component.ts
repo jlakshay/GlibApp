@@ -29,7 +29,7 @@ export class VideoCallComponent implements OnInit {
 		// this.email=this.route.snapshot.params['email'];
 		// console.log("email",this.email);
 		let video = this.myVideo.nativeElement;
-		this.peer = new Peer(this.userId,{host:'localhost',
+		this.peer = new Peer(this.userId,{host:'192.168.252.186',
 			port:4000,
 			path:'/peerjs'
 		});

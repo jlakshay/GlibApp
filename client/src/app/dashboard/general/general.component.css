@@ -16,10 +16,12 @@ textarea{
     padding: 5px 5px 5px 15px;
     border-radius: 6px;
 }
+
 #com{
   text-align: -webkit-auto;
   color: whitesmoke;
 }
+
 h3{
   color:whitesmoke;
   cursor: pointer;
@@ -32,6 +34,7 @@ h3{
 }
 #cod{
   color: #444;
+  background-color:#d2d6de; 
 }
 #head
 {background-color:#212529;
@@ -1189,17 +1192,3 @@ color: whitesmoke; }
     border-left-color: #00a65a;
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

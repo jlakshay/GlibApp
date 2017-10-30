@@ -41,6 +41,7 @@ export class GeneralComponent implements OnInit {
    private router :Router)   
  {
 
+
    this.generalChatService.getMessageObservable.subscribe((message)=>{
      console.log("Message is here", message);
      this.socketmessage=message; 
@@ -67,10 +68,10 @@ console.log("this is socket code to be pushed",this.socketcode);
      this.allGeneralMessages.push(this.socketcode);
 
      console.log("message code",this.allGeneralMessages);
+console.log("mes",this.allGeneralMessages);
+
    })
  }
-
-
 
 //---------------------------------------------- callback in messages start--------------------------------------------//
 
@@ -89,6 +90,7 @@ console.log("this is socket code to be pushed",this.socketcode);
     this.generalService.saveMessage(this.username,this.dbmessage)
     .subscribe((current: string) => {
   this.socketSave();
+
     });
 
     console.log("This is after serveice call through compoentr*****************");
@@ -116,7 +118,7 @@ let data={
 
 //------------------------------------------------------sends and gets the message to the socket.io start-------------//
 
-   // let currentTime = moment().format('hh:mm:ss a');
+  // let currentTime = moment().format('hh:mm:ss a');
    this.generalChatService.sendMessage(data);
 
    this.generalChatService.getCurrent()
@@ -128,18 +130,14 @@ let data={
     this.currentUser=current;
     });
 
+
 //---------------------------------------------sends and gets the message to the socket.io end----------------------//
-
- }
- 
-
 
 
  //---------------------------------------------- callback in messages end --------------------------------------------//
 
-
-
-
+ }
+ 
 // get room name from dropdown and the service
 room(room):any{
  this.chatroom=room;
@@ -180,19 +178,15 @@ console.log("Language is = ",this.data.language);
 console.log("This is language select",this.data.username);
 }
 
-
 //-------------------------------------------- callback for code start----------------------------------------------------//
 
  sendCodeData(callbackcode=()=>{
-
-
-
 //-------------------------- saving the data to db start-------------------------------------------------------------//
-
     console.log("*****************");
    this.generalService.saveCode(this.data)
    .subscribe((code: string) => {
      this.callbackCodeData();
+
        console.log("@@@@@@@@@@@save code callback1",code);
      });
 
@@ -208,18 +202,13 @@ console.log("This is language select",this.data.username);
     });
 
 //-----------------------saving data to db end-----------------------------------------------------------------------//
-
  })
-
 
  {
 callbackcode();
 // callbackCode2();
   
  }
-
-
-
 callbackCodeData=()=>{
 
 //----------------------------------saving ang getting data from socket start----------------------------------------//
@@ -229,6 +218,7 @@ callbackCodeData=()=>{
       .subscribe((code: string) => {
         this.getCodeData();
        console.log("@@@@@@@@@@@ socket code component callback2",code);
+
 
 
      });
@@ -265,11 +255,6 @@ getCodeData(){
        console.log("getting code from mongo",code);
      });
 }
-
-
-
-
-
 
  ngOnInit() {
 

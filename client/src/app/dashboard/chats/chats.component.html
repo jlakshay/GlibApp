@@ -78,7 +78,8 @@
       (change)="onStateChange($event)"
     ></youtube-player>
               
-        <div class="card" id="left" *ngIf='message.description' >
+
+        <div class="card" id="left" *ngIf='message.title' >
   <div class="vl">
   <div class="card-block" >
     <h4 class="card-title">{{message.title}}</h4>
@@ -150,7 +151,8 @@
       (change)="onStateChange($event)"
     ></youtube-player>
               
-        <div class="card" id="card" *ngIf='message.description' >
+
+        <div class="card" id="card" *ngIf='message.title' >
   <div class="vl">
   <div class="card-block" >
     <h4 class="card-title">{{message.title}}</h4>

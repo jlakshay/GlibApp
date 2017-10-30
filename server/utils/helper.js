@@ -52,6 +52,34 @@ var Helper = /** @class */ (function () {
             });
         });
     };
+<<<<<<< HEAD
+=======
+
+    Helper.prototype.setFlag = function (data, callback) {
+        console.log("inside helper",data);
+        this.Mongodb.onConnect(function (db, ObjectID) {
+            db.collection('users').findOne({_id:ObjectID(data.toId)}, function (err, result) {
+                console.log("!!!!!!!!!!!!!",result)
+                if(result){
+
+                    console.log("result#####################",result);
+                    if(result.reciever===undefined)
+                    {
+                        console.log("here");
+                        db.collection("users").update({_id:ObjectID(data.toId)}
+                            ,{$addToSet:{"reciever":{"fromId":data.fromId,"flag":1}}},{strict:false}
+                            ,function(err,result){
+                                console.log("reciever added",result);
+                            })
+                    }
+
+                }
+                // db.close();
+                // callback(err, result);
+            });
+        });
+    };
+>>>>>>> c1c43bb6e21daf6a337833c97c741bf8bf79ab1b
     /*
     * Name of the Method : userSessionCheck
     * Description : to check if user is online or not.

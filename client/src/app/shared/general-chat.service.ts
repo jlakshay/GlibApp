@@ -4,9 +4,8 @@ import { Observable } from 'rxjs/Observable';
 export class GeneralChatService {
     private url = 'http://localhost:4000';
     private socket;
-
     getCodeObservable:any;
-    getMessageObservable: any;
+   getMessageObservable: any;
     constructor() {
 
 
@@ -19,6 +18,7 @@ export class GeneralChatService {
             });
           this.getMessageObservable = Observable.create((observer) => {
                 this.socket.on('new-message', (message) => {
+
                     console.log("message in object form message",message);
                     observer.next(message);
                 });
@@ -29,10 +29,7 @@ export class GeneralChatService {
                 console.log("message in object form code",code);
                 observer.next(code);
             });
-        });
-           
-
-          
+        });        
 
           this.getMessages();
     }
