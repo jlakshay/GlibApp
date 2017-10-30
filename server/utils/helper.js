@@ -52,8 +52,6 @@ var Helper = /** @class */ (function () {
             });
         });
     };
-<<<<<<< HEAD
-=======
 
     Helper.prototype.setFlag = function (data, callback) {
         console.log("inside helper",data);
@@ -79,7 +77,7 @@ var Helper = /** @class */ (function () {
             });
         });
     };
->>>>>>> c1c43bb6e21daf6a337833c97c741bf8bf79ab1b
+
     /*
     * Name of the Method : userSessionCheck
     * Description : to check if user is online or not.

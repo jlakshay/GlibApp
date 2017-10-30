@@ -4,10 +4,9 @@ import { ActivatedRoute ,Router } from '@angular/router';
 import { SocketService } from './../../socket.service';
 import { HttpService } from './../../http.service';
 import { ChatService } from './../../chat.service';
-<<<<<<< HEAD
+
 import {GetInfoService} from './../../shared/get-info.service';
-=======
->>>>>>> c1c43bb6e21daf6a337833c97c741bf8bf79ab1b
+
 @Component({
   selector: 'app-chats',
   templateUrl: './chats.component.html',
@@ -22,43 +21,28 @@ export class ChatsComponent implements OnInit, AfterViewInit{
 	private userName:any;
 	private userId:any;
 	private socketId:any;
-<<<<<<< HEAD
-	private status:any='online';
-	private selectedSocketId:any;
-=======
 	private selectedSocketId:any;
 	private status:any='online';
->>>>>>> c1c43bb6e21daf6a337833c97c741bf8bf79ab1b
 	private selectedUserId: any
 	private chatListUsers:any =[];
 	private message:any;
 	private messages:any = [];
 	url:any;
 	scrapingData:any={};
-<<<<<<< HEAD
-=======
 	sendData:any={};
->>>>>>> c1c43bb6e21daf6a337833c97c741bf8bf79ab1b
+
 	/*
 	* Chat and message related variables ends
 	*/
   constructor(private route: ActivatedRoute,
   	private chatService : ChatService,
 		private socketService : SocketService,
-<<<<<<< HEAD
 		private router :Router,private genService:GetInfoService) { }
-=======
-		private router :Router) { }
->>>>>>> c1c43bb6e21daf6a337833c97c741bf8bf79ab1b
+
 
   player: YT.Player;
     savePlayer (player) {
     this.player = player;
-<<<<<<< HEAD
-    console.log('player instance', player)
-=======
-   // console.log('player instance', player)
->>>>>>> c1c43bb6e21daf6a337833c97c741bf8bf79ab1b
     }
 
 
