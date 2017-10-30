@@ -5,8 +5,8 @@ module.exports= function (request, response) {
     var data={
         "username":request.body.username,
         "timestamp":Date.now()
-        
-        
+
+
 
     };
     if(request.body.message!==undefined)
@@ -22,7 +22,6 @@ module.exports= function (request, response) {
         "comment":request.body.comment,
         "language":request.body.language,
         "username":request.body.username
-        "language":request.body.language
     };
 }
 if(request.body.url!==undefined)
@@ -43,15 +42,15 @@ if(request.body.filepath!==undefined)
             //     "comment":request.body.comment,
             //     "language":request.body.language
             // },
-            
-            
+
+
             helper.insertToGeneral(data,function(error,result){
                 if(error){
 
                     response.status(200).json(error);
                 }
                 else {
-                 
+
                  response.status(200).json(result);
              }
 

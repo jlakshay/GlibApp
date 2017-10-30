@@ -1,464 +1,494 @@
-        <div *ngFor="let message of messages">
-          {{message.message}}
-        </div> -->
-        <body>
-          <div class="container-fluid" id="secondSec">
-            <div class="row bootstrap snippets">
-              <div class="col-md-12">
+      <div *ngFor="let message of messages">
+        {{message.message}}
+      </div> -->
+     <body>
+    <div class="container-fluid" id="secondSec">
+    <div class="row bootstrap snippets">
+    <div class="col-md-12">
 
-                <!-- DIRECT CHAT WARNING -->
+        <!-- DIRECT CHAT WARNING -->
 
-                <div class=" direct-chat direct-chat-warning">
+        <div class=" direct-chat direct-chat-warning">
 
-                  
+      
 
-                  <!-- /.box-header -->
+          <!-- /.box-header -->
 
-                  <div class="box-body">
+          <div class="box-body">
 
-                    <!-- Conversations are loaded here -->
+            <!-- Conversations are loaded here -->
 
 
 
 
-                    <div class="direct-chat-messages">
+            <div class="direct-chat-messages">
 
-                      <!-- Message. Default to the left -->
-                      <div *ngFor="let msg of allGeneralMessages,let i=index">
+              <!-- Message. Default to the left -->
+<div *ngFor="let msg of allGeneralMessages,let i=index">
 
+  <!-- <h1>{{msg.message}}</h1>
+   -->
+  <div *ngIf="msg.message">
 
+  <!-- <h1>{{msg.message}}</h1> -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  grey   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --> 
 
-                        <div *ngFor="let msg of allGeneralMessages,let i=index">
 
-                          <!-- <h1>{{msg.message}}</h1>
-                        -->
+              <div class="container-fluid" *ngIf="msg.username!==username">
 
-                        <div *ngIf="msg.message">
+              <div class="row">
 
-                          <!-- <h1>{{msg.message}}</h1> -->
-                          <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  grey   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --> 
+              <div class="col-md-8">
 
+              <div class="direct-chat-msg">
 
-                          <div class="container-fluid" *ngIf="msg.username!==username">
+                <div class="direct-chat-info clearfix">
 
-                            <div class="row">
+                  <span class="direct-chat-name pull-left">{{msg.username}}</span>
 
-                              <div class="col-md-8">
+                  <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
 
-                                <div class="direct-chat-msg">
+                </div>
 
-                                  <div class="direct-chat-info clearfix">
+                <!-- /.direct-chat-info -->
 
-                                    <span class="direct-chat-name pull-left">{{msg.username}}</span>
+                <img class="direct-chat-img" src="https://bootdey.com/img/Content/user_1.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
 
-                                    <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
+                <div class="direct-chat-text">
 
-                                  </div>
+                  {{msg.message}}
 
-                                  <!-- /.direct-chat-info -->
+                </div>
 
-                                  <img class="direct-chat-img" src="https://bootdey.com/img/Content/user_1.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
+                <!-- /.direct-chat-text -->
 
-                                  <div class="direct-chat-text">
+              </div>
 
-                                    {{msg.message}}
+              </div>
 
-                                  </div>
+              <!-- /.direct-chat-msg -->
 
-                                  <!-- /.direct-chat-text -->
+              <div class="col-md-4">
 
-                                </div>
+              </div>
 
-                              </div>
+              </div>
 
-                              <!-- /.direct-chat-msg -->
+              </div>
 
-                              <div class="col-md-4">
+              
+  <!-- yellow xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 
-                              </div>
 
-                            </div>
+   
+              <div class="container-fluid" *ngIf="msg.username===username">
 
-                          </div>
+              <div class="row">
 
-                          
-                          <!-- yellow xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+              <div class="col-md-4">
 
+              </div>
 
-                          
-                          <div class="container-fluid" *ngIf="msg.username===username">
+              <!-- Message to the right -->
 
-                            <div class="row">
+              <div class="col-md-8">
 
-                              <div class="col-md-4">
+              <div class="direct-chat-msg right">
 
-                              </div>
+                <div class="direct-chat-info clearfix">
 
-                              <!-- Message to the right -->
+                  <span class="direct-chat-name pull-right">{{msg.username}}</span>
 
-                              <div class="col-md-8">
+                  <span class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>
 
-                                <div class="direct-chat-msg right">
+                </div>
 
-                                  <div class="direct-chat-info clearfix">
+                <!-- /.direct-chat-info -->
 
-                                    <span class="direct-chat-name pull-right">{{msg.username}}</span>
+                <img class="direct-chat-img" src="https://bootdey.com/img/Content/user_2.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
 
-                                    <span class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>
+                <div class="direct-chat-text">
 
-                                  </div>
+                  {{msg.message}}
 
-                                  <!-- /.direct-chat-info -->
+                </div>
 
-                                  <img class="direct-chat-img" src="https://bootdey.com/img/Content/user_2.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
+                <!-- /.direct-chat-text -->
 
-                                  <div class="direct-chat-text">
+              </div>
 
-                                    {{msg.message}}
+              </div>
 
-                                  </div>
+              <!-- /.direct-chat-msg -->
 
-                                  <!-- /.direct-chat-text -->
+              </div>
 
-                                </div>
+              </div>
 
-                              </div>
+          
 
-                              <!-- /.direct-chat-msg -->
+  <!-- yellow xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->         
 
-                            </div>
 
-                          </div>
 
-                          
 
-                          <!-- yellow xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->         
+  </div>
 
 
 
+  <div *ngIf="msg.code">
 
-                        </div>
-                        <div *ngIf="msg.code">
-
-    <!-- <div class="container-fluid" *ngIf="msg.username===username">
-    <h1>{{msg.code}}</h1>
-  </div> -->
 
   <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  grey   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --> 
 
 
 
-  <div class="container-fluid" *ngIf="msg.username!==username">
 
-    <script>
-     $('.carousel').carousel({
-       interval: 3000
-     })
-   </script>
 
-   <div class="row">
-    <div class="col-md-8">
 
-     <!--  {{msg.username}} -->
-     <div class="direct-chat-info clearfix">
 
-      <span class="direct-chat-name pull-left">{{msg.username}}</span>
-      <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
+
+<div class="container-fluid" *ngIf="msg.username!==username">
+
+            <script>
+               $('.carousel').carousel({
+                 interval: 3000
+               })
+            </script>
+
+<div class="row">
+<div class="col-md-8">
+
+            
+ <div class="direct-chat-info clearfix">
+
+                  <span class="direct-chat-name pull-left">{{msg.username}}</span>
+                  <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
+
+   </div>
+
+ <img class="direct-chat-img" src="https://bootdey.com/img/Content/user_1.jpg" alt="Message User Image"> 
+     <div class="direct-chat-text">
+   <div id="faq">
+     <div class="panel-group" id="accordion">
+       <div class="panel panel-default">
+         <div class="panel-heading">
+           <h4 class="panel-title">
+           <div class="row">
+           <div class="col-md-8">
+             <h5 class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" [attr.data-target]="'#'+i" aria-expanded="false" aria-controls="collapseExample">
+             {{msg.code.title}}
+             </h5>
+             </div>
+             <div class="col-md-4">
+              <h5 style="text-align: right;">{{msg.code.language}}</h5>
+              </div>
+             </div>
+           </h4>
+         </div>
+         <div id={{i}} class="panel-collapse collapse">
+           <div class="panel-body">
+           <h3 id="cod">Code:</h3>
+          <p>{{msg.code.code}}</p>
+           </div>
+           <div class="panel-footer">
+           <h3 id="cod">Comment: {{msg.code.comment}} </h3>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+   </div>
+   </div>
+   <div class="col-md-4">
+   </div>
+   </div>
+
 
     </div>
 
-    <img class="direct-chat-img" src="https://bootdey.com/img/Content/user_1.jpg" alt="Message User Image"> 
-    <div class="direct-chat-text">
-     <div id="faq">
-       <div class="panel-group" id="accordion">
-         <div class="panel panel-default">
-           <div class="panel-heading">
-             <h4 class="panel-title">
-               <div class="row">
-                 <div class="col-md-8">
-                   <h5 class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" [attr.data-target]="'#'+i" aria-expanded="false" aria-controls="collapseExample">
-                     {{msg.code.title}}
-                   </h5>
-                 </div>
-                 <div class="col-md-4">
-                  <h5 style="text-align: right;">{{msg.code.language}}</h5>
-                </div>
-              </div>
-            </h4>
-          </div>
-          <div id={{i}} class="panel-collapse collapse">
-           <div class="panel-body">
-             <h3 id="cod">Code:</h3>
-             <p>{{msg.code.code}}</p>
-           </div>
-           <div class="panel-footer">
-             <h3 id="com">Comment: {{msg.code.comment}} </h3>
-           </div>
-         </div>
-       </div>
-     </div>
-   </div>
-  </div>
-  </div>
-  <div class="col-md-4">
-  </div>
-  </div>
-  </div>
-
-
+              
   <!-- yellow xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 
 
+   
+              <div class="container-fluid" *ngIf="msg.username===username">
+<div class="row">
+ <div class="col-md-4">
+   </div>
+<div class="col-md-8">
 
-  <div class="container-fluid" *ngIf="msg.username===username">
-    <div class="row">
-     <div class="col-md-4">
-     </div>
-     <div class="col-md-8">
+              <div class="direct-chat-msg right">           
+ <div class="direct-chat-info clearfix">
 
-      <div class="direct-chat-msg right">           
-       <div class="direct-chat-info clearfix">
+                  <span class="direct-chat-name pull-right">{{msg.username}}</span>
+                  <span class="direct-chat-timestamp pull-left">23 Jan 2:00 pm</span>
 
-        <span class="direct-chat-name pull-right">{{msg.username}}</span>
-        <span class="direct-chat-timestamp pull-left">23 Jan 2:00 pm</span>
+   </div>
 
-      </div>
-
-      <img class="direct-chat-img" src="https://bootdey.com/img/Content/user_2.jpg" alt="Message User Image">
-      <div class="direct-chat-text">
-       <div id="faq">
-         <div class="panel-group" id="accordion">
-           <div class="panel panel-default">
-             <div class="panel-heading">
-               <h4 class="panel-title">
-                 <div class="row">
-                   <div class="col-md-8">
-                     <h5 class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" [attr.data-target]="'#'+i" aria-expanded="false" aria-controls="collapseExample">
-                       {{msg.code.title}}
-                     </h5>
-                   </div>
-                   <div class="col-md-4">
-                    <h5 style="text-align: right;">{{msg.code.language}}</h5>
-                  </div>
-                </div>
-              </h4>
-            </div>
-            <div id={{i}} class="panel-collapse collapse">
-             <div class="panel-body">
-               <h3 id="cod">Code:</h3>
-               <p>{{msg.code.code}}</p>
+  <img class="direct-chat-img" src="https://bootdey.com/img/Content/user_2.jpg" alt="Message User Image">
+     <div class="direct-chat-text">
+   <div id="faq">
+     <div class="panel-group" id="accordion">
+       <div class="panel panel-default">
+         <div class="panel-heading">
+           <h4 class="panel-title">
+           <div class="row">
+           <div class="col-md-8">
+             <h5 class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" [attr.data-target]="'#'+i" aria-expanded="false" aria-controls="collapseExample">
+             {{msg.code.title}}
+             </h5>
              </div>
-             <div class="panel-footer">
-               <h3 id="com">Comment: {{msg.code.comment}} </h3>
+             <div class="col-md-4">
+              <h5 style="text-align: right;">{{msg.code.language}}</h5>
+              </div>
              </div>
+           </h4>
+         </div>
+         <div id={{i}} class="panel-collapse collapse">
+           <div class="panel-body">
+           <h3 id="cod">Code:</h3>
+          <p>{{msg.code.code}}</p>
+           </div>
+           <div class="panel-footer">
+           <h3 id="cod">Comment: {{msg.code.comment}} </h3>
            </div>
          </div>
        </div>
      </div>
    </div>
-  </div>
-  </div>
+   </div>
+   </div>
+   </div>
+  
+   </div>
 
-  </div>            
-  </div>
+              </div>
 
-
+          
 
   <!-- yellow xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->         
 
 
 
   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
   <div *ngIf="msg.url">
-    <h2>code is url</h2>
-  </div>
-  </div>
-  <!-- Message. Default to the left -->          
+
+
+  <h2>code is url</h2>
 
   </div>
 
-  <!--/.direct-chat-messages-->
-  <!-- /.direct-chat-pane -->
 
   </div>
-  <!-- /.box-body -->
-  </div>
-  <div class="footer">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-2">
-        </div>
-        <div class="col-md-10">
-          <form action="#" method="post">
-            <div class="input-group container-fluid">
-              <!-- Default dropup button -->
-              <div class="btn-group dropup">
-                <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="fa fa-plus" aria-hidden="true"></i>
-                </button>
 
-                <div class="dropdown-menu">
-
-                  <a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-paperclip" aria-hidden="true"></i> Code Snippet</a>
-
-                  <div class="dropdown-divider"></div>
-
-                  <a class="dropdown-item" href="#"><i class="fa fa-desktop" aria-hidden="true"></i> Your Computer</a>
-
-                  <!-- Dropdown menu links -->
-
-                </div>
-
-              </div>
-
-              <button class="btn btn-secondary"><i class="fa fa-video-camera" aria-hidden="true"></i></button>
+             <!-- Message. Default to the left -->
 
               
-
-              
-
-              <input type="text" name="message" placeholder="Type Message ..." class="form-control" [(ngModel)]="message" (keyup)="$event.keyCode == 13 && sendMessage()">
-
-              <span class="input-group-btn">
+        
 
 
 
-                <button type="submit" class="btn btn-warning btn-flat" (click)="sendMessage()">Send</button>
 
-              </span>
+
+             
+
+
 
             </div>
 
-          </form>
 
-        </div>
+
+            <!--/.direct-chat-messages-->
+
+
+
+            <!-- /.direct-chat-pane -->
+
+          </div>
+
+          <!-- /.box-body -->
+
+          </div>
+
+          <div class="footer">
+
+          <div class="container-fluid">
+
+          <div class="row">
+
+          <div class="col-md-2">
+
+          </div>
+
+          <div class="col-md-10">
+
+            <form action="#" method="post">
+
+              <div class="input-group container-fluid">
+
+              <!-- Default dropup button -->
+
+    <div class="btn-group dropup">
+
+      <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+        <i class="fa fa-plus" aria-hidden="true"></i>
+
+      </button>
+
+      <div class="dropdown-menu">
+
+      <a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-paperclip" aria-hidden="true"></i> Code Snippet</a>
+
+        <div class="dropdown-divider"></div>
+
+        <a class="dropdown-item" href="#"><i class="fa fa-desktop" aria-hidden="true"></i> Your Computer</a>
+
+        <!-- Dropdown menu links -->
 
       </div>
 
     </div>
 
-  </div>
+    <button class="btn btn-secondary"><i class="fa fa-video-camera" aria-hidden="true"></i></button>
 
-  <!-- /.box-footer-->
+              
 
-  </div>
+              
 
-  <!--/.direct-chat -->
-  </div>
-  </div>
+                <input type="text" name="message" placeholder="Type Message ..." class="form-control" [(ngModel)]="message" (keyup)="$event.keyCode == 13 && sendMessage()">
+
+                    <span class="input-group-btn">
 
 
-  </body>
+
+                      <button type="submit" class="btn btn-warning btn-flat" (click)="sendMessage()">Send</button>
+
+                    </span>
+
+              </div>
+
+            </form>
+
+            </div>
+
+          </div>
+
+          </div>
+
+          </div>
+
+          <!-- /.box-footer-->
+
+        </div>
+
+
+
+
+
+        <!--/.direct-chat -->
+
+      </div>
+
+      
+
+      
+
+      
+
+      
+
+    </div>
+
+
+
+
+
+     </body>
+
+
 
   <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
        <div class="modal-header" id="head">
-        <h5 class="modal-title" id="exampleModalLabel" >New Snippet</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+          <h5 class="modal-title" id="exampleModalLabel" >New Snippet</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+         <div class="modal-body modal-lg">
+     <!--      <form> -->
+          <div class="row">
+          <div class="col-md-8">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Ttle(Optional)" [(ngModel)]="data.title" id="recipient-name">
+            </div>
+            </div>
+            <div class="col-md-4"> 
+
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown button
         </button>
-      </div>
-      <div class="modal-body modal-lg">
-       <!--      <form> -->
-       <div class="row">
-        <div class="col-md-8">
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Ttle(Optional)" [(ngModel)]="data.title" id="recipient-name">
-          </div>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <ul>
+            <li class="dropdown-item" (click)=languageSelect(Java)>Java</li>
+            <li class="dropdown-item" (click)=languageSelect(C)>C</li>
+            <li class="dropdown-item" (click)=languageSelect(Javascript)>Javascript</li>
+            <li class="dropdown-item" (click)=languageSelect(Python)>Python</li>
+          </ul>
         </div>
-        <div class="col-md-4"> 
+      </div>
 
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown button
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <ul>
-                <li class="dropdown-item" (click)=languageSelect(Java)>Java</li>
-                <li class="dropdown-item" (click)=languageSelect(C)>C</li>
-                <li class="dropdown-item" (click)=languageSelect(Javascript)>Javascript</li>
-                <li class="dropdown-item" (click)=languageSelect(Python)>Python</li>
-              </ul>
+  </div>
+  </div>
+
+
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Code Snippet:</label>
+              <textarea class="form-control" id="message-text" [(ngModel)]="data.code"></textarea>
             </div>
-          </div>
-
-        </div>
-      </div>
-
-
-      <div class="form-group">
-        <label for="message-text" class="col-form-label">Code Snippet:</label>
-        <textarea class="form-control" id="message-text" [(ngModel)]="data.code"></textarea>
-      </div>
-      <div class="row">
-        <div class="col-md-3">
-          
-          <p>Comment(Optional):</p>
-        </div>
-        <div class="col-md-9">
-          <div class="form-group">
-            <input class="form-control" id="message-text" [(ngModel)]="data.comment">
-          </div>
-        </div>
-      </div>
-      <!--         </form> -->
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-seconary" data-dismiss="modal">Close</button>
-
-      <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="sendCodeData()" >Send Code 123</button>
-
-    </div>
-    
-  </div>
-  </div>
-  </div>
-
-
-      <!-- <script>
-      $('.carousel').carousel({
-        interval: 3000
-      })
-     </script>
-     
-      <div class="container">
-      <div class="row">
-        
-          <div class="panel-group" id="accordion">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <h3 class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
-                    href="#collapse-1">
-                  Code Snippet
-                  </h3>
-                </h4>
-              </div>
-              <div id="collapse-1" class="panel-collapse collapse">
-                <div class="panel-body">
-                  <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
-                    squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa
-                    nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-                    single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft
-                  </p>
-                  <p>beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice
-                    lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you
-                    probably haven't heard of them accusamus labore sustainable VHS.
-                  </p>
-                </div>
-              </div>
+            <div class="row">
+            <div class="col-md-3">
+            
+            <p>Comment(Optional):</p>
             </div>
-          </div>
+            <div class="col-md-9">
+            <div class="form-group">
+              <input class="form-control" id="message-text" [(ngModel)]="data.comment">
+            </div>
+            </div>
+            </div>
+  <!--         </form> -->
+        </div>
+           <div class="modal-footer">
+          <button type="button" class="btn btn-seconary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="sendCodeData()" >Send Code 123</button>
+        </div>
+      
       </div>
-      </div>
-    -->
-    
+    </div>
+  </div>
 
-    
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-    
 
+
+
+   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+   <!-- Include all compiled plugins (below), or include individual files as needed -->
+   <script src="js/bootstrap.min.js"></script>
