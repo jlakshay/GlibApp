@@ -27,13 +27,13 @@ import { HttpService } from './../http.service';
    private username = null;
       private email = null;
       private password = null;
-     private userData={};
+ 
       private isuserNameAvailable = false;
       private userTypingTimeout= 500;
       private typingTimer = null;
    constructor(
      private mailotp:MailotpService,private chatService : ChatService,
-          private router :Router,private registerService :RegisterService
+         private router :Router,private registerService :RegisterService
      ) { }
 
 
@@ -67,27 +67,25 @@ import { HttpService } from './../http.service';
         }else if(this.password === ''){
             alert(`Password can't be empty.`);
         }else{
-           /*this.chatService.registerUser({
-                username : this.username,
-                email : this.email,
-                password : this.password
-            },(error , result)=>{
-                if(error) {
-                    alert(result);
-                }else{
-                    if(!result.error) {
-                        this.router.navigate(['/login']);
-                    }else{
-                        alert(`Registration failure.`);
-                    }
-                }
-            });*/
-            this.registerService.tempUser({"email":this.email, "username":this.username, "password":this.password})
+           // this.chatService.registerUser({
+           //      username : this.username,
+           //      email : this.email,
+           //      password : this.password
+           //  },(error , result)=>{
+           //      if(error) {
+           //          alert(result);
+           //      }else{
+           //          if(!result.error) {
+           //              this.router.navigate(['/login']);
+           //          }else{
+           //              alert(`Registration failure.`);
+           //          }
+           //      }
+           //  });
+           this.registerService.tempUser({"email":this.email, "username":this.username, "password":this.password})
             this.mailotp.sendMailOTP(this.email, "Registeration Verification", "login").subscribe((res)=>{
-
               if(res.message = "OTP Sent"){
                 this.router.navigateByUrl('/verify')
-
               }else{
                 alert(`Invalid Email.`)
               }

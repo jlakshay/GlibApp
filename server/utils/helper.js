@@ -52,6 +52,31 @@ var Helper = /** @class */ (function () {
             });
         });
     };
+
+    Helper.prototype.setFlag = function (data, callback) {
+        console.log("inside helper",data);
+        this.Mongodb.onConnect(function (db, ObjectID) {
+            db.collection('users').findOne({_id:ObjectID(data.toId)}, function (err, result) {
+                console.log("!!!!!!!!!!!!!",result)
+                if(result){
+
+                    console.log("result#####################",result);
+                    if(result.reciever===undefined)
+                    {
+                        console.log("here");
+                        db.collection("users").update({_id:ObjectID(data.toId)}
+                            ,{$addToSet:{"reciever":{"fromId":data.fromId,"flag":1}}},{strict:false}
+                            ,function(err,result){
+                                console.log("reciever added",result);
+                            })
+                    }
+
+                }
+                // db.close();
+                // callback(err, result);
+            });
+        });
+    };
     /*
     * Name of the Method : userSessionCheck
     * Description : to check if user is online or not.
@@ -132,25 +157,24 @@ var Helper = /** @class */ (function () {
             });
         });
     };
-    Helper.prototype.insertMessagesToGeneral = function (data, callback) {
+    Helper.prototype.insertToGeneral = function (data, callback) {
         this.Mongodb.onConnect(function (db, ObjectID) {
             console.log(data);
-            db.collection('genaralChannel').insertOne(data, function (err, result) {
+            db.collection('general').insertOne(data, function (err, result) {
                 db.close();
                 callback(err, result);
             });
         });
     };
-    ;
-    Helper.prototype.getMessagesfromGeneral = function (callback) {
+    Helper.prototype.getfromGeneral = function (callback) {
         this.Mongodb.onConnect(function (db, ObjectID) {
-            db.collection('genaralChannel').find({}).toArray(function (err, result) {
+            db.collection('general').find({}).toArray(function (err, result) {
                 db.close();
                 callback(err, result);
             });
         });
     };
-
+    
     Helper.prototype.getUsers = function (callback) {
         this.Mongodb.onConnect(function (db, ObjectID) {
             db.collection('users').find({}).toArray(function (err, result) {
@@ -160,7 +184,6 @@ var Helper = /** @class */ (function () {
         });
     };
     
-
 
     /*
     * Name of the Method : getMessages
@@ -226,76 +249,6 @@ var Helper = /** @class */ (function () {
             });
         });
     };
-
-    /*
-    * Name of the Method : verifyForgotPassword
-    * Description : To verify if email exists on database.
-    * Parameter :
-    *       1) email
-    *       2) callback function
-    * Return : callback
-    */
-    Helper.prototype.verifyForgotPassword = function (email, callback) {
-        this.Mongodb.onConnect(function (db, ObjectID) {
-            db.collection('users').findOne({"email": email }, function (err, result) {
-                //console.log(result);
-                db.close();
-                callback(err, result);
-            });
-        });
-    };
-    /*
-    * Name of the Method : forgotPassword
-    * Description : To reset forgotten user Password.
-    * Parameter :
-    *       1) email
-    *       2) passoword
-    *       3) callback function
-    * Return : callback
-    */
-    Helper.prototype.forgotPassword = function (email, password, callback) {
-        this.Mongodb.onConnect(function (db, ObjectID) {
-            db.collection('users').update({"email": email },{$set: {"password":password}}, function (err, result) {
-                db.close();
-                callback(err, result);
-            });
-        });
-    };
-    /*
-    * Name of the Method : getUserData
-    * Description : To fetch textual user data.
-    * Parameter :
-    *       1) email
-    *       2) callback function
-    * Return : callback
-    */
-    Helper.prototype.getUserData = function (email, callback) {
-        this.Mongodb.onConnect(function (db, ObjectID) {
-            db.collection('users').findOne({"email": email }, function (err, result) {
-                db.close();
-                callback(err, result);
-            });
-        });
-    };
-    /*
-    * Name of the Method : upateUserData
-    * Description : To update user data.
-    * Parameter :
-    *       1) email
-    *       2) data
-    *       3) callback function
-    * Return : callback
-    */
-    Helper.prototype.updateUserData = function (email, data, callback) {
-        this.Mongodb.onConnect(function (db, ObjectID) {
-            db.collection('users').updateOne({"email": email }, data, function (err, result) {
-                db.close();
-                callback(err, result);
-            });
-        });
-    };
-    
-
     return Helper;
 }());
 module.exports = new Helper();

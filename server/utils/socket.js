@@ -16,6 +16,14 @@ var Socket = /** @class */ (function () {
         console.log("socket id",socket.id);
 
 
+
+    //get the code
+    socket.on('new-code', (code) => {
+    console.log("In socket js",code);
+      _this.io.emit('codes', code);
+      // socket.broadcast.emit('codes', code);
+    });
+
 socket.on('chat-rooms', (message) => {
        console.log("inside server chatroom");
 
@@ -24,6 +32,7 @@ socket.on('chat-rooms', (message) => {
     _this.io.to('java').emit('some-event',"java");
 
     });
+
 
 
 socket.on('new-user',function(data,callback){
@@ -39,15 +48,17 @@ else{
     console.log("array",usernames);
 }
 });
+
+
+
+
     socket.on('new-message', (message) => {
+    message.time=Date.now();
         _this.io.emit('new-message', message);
-
-
-
+         console.log("this is server message",message);
         // socket.broadcast.emit('new-message', message);  //this is used to broadcast the message to all leaving the sender itself
-
-
  });
+
 
     socket.on('getcurrentuser',()=>{
     // console.log("dissconnect user",socket.username);
@@ -79,13 +90,11 @@ else{
                 }
                 else {
 
-
-
                     helper.getUserInfo(data.userId, function (err, UserInfoResponse) {
                         delete UserInfoResponse.password;
                         console.log(" new  user connected with socket",UserInfoResponse)
 
-            
+                    
                         helper.getChatList(socket.id, function (err, response) {
                             _this.io.to(socket.id).emit('chat-list-response', {
                                 error: false,
@@ -139,6 +148,13 @@ else{
                         socketId: socket.id
                     });
                 });
+            });
+
+            socket.on('flag',function(data){
+            	console.log("value of flag",data);
+            _this.io.to(socket.id).emit('flag-response'),{
+            	flag:data
+            }
             });
             /**
             * sending the disconnected user to all socket users.

@@ -1,138 +1,307 @@
+<!-- <div class="box-header with-border container" id="videoHead">
 
-<body>
-<div class="row bootstrap snippets">
-    
-    
-    
-   
-    
+        <h3 class="box-title">Kuldeep</h3> <i class="fa fa-circle" aria-hidden="true" id=fontAw></i>
 
-  <div class="col-md-12">
-    <!-- DIRECT CHAT WARNING -->
-    <div class="box box-warning direct-chat direct-chat-warning">
-      <div class="box-header with-border">
-        <h3 class="box-title">{{userName}}</h3> <i class="fa fa-circle" aria-hidden="true" id=fontAw></i>
+
 
         <div class="box-tools pull-right">
+
           <button type="button" class="btn btn-box-tool" data-widget="tooltip" title="Video Call"><i class="fa fa-video-camera" aria-hidden="true"></i>
+
           </button>
+
           <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Contacts" data-widget="chat-pane-toggle">
+
             <i class="fa fa-comments"></i></button>
+
         </div>
+
       </div>
+
+
+ -->
+ 
+
+   
+
+    
+<body>
+    
+
+<div class="container-fluid" id="secondSec">
+
+
+
+<div class="row bootstrap snippets">
+
+  <div class="col-md-12">
+
+    <!-- DIRECT CHAT WARNING -->
+
+    <div class=" direct-chat direct-chat-warning">
+
+  
+
       <!-- /.box-header -->
 
-      <div class="box-body message-thread">
+      <div class="box-body">
+
         <!-- Conversations are loaded here -->
-        <div  id ="toscroll" class="direct-chat-messages" *ngFor="let message of messages"
-							>
+
+        <div class="direct-chat-messages" *ngFor="let message of messages">
+
           <!-- Message. Default to the left -->
+
+          <div class="container-fluid">
+
+          <div class="row">
+
+          <div class="col-md-8">
+
           <div class="direct-chat-msg" *ngIf="!alignMessage(message.toUserId)">
+
             <div class="direct-chat-info clearfix">
+
               <span class="direct-chat-name pull-left">{{userName}}</span>
+
               <span class="direct-chat-timestamp pull-right">{{message.timestamp}}</span>
+
             </div>
+
             <!-- /.direct-chat-info -->
+
             <img class="direct-chat-img" src="https://bootdey.com/img/Content/user_1.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
+
             <div class="direct-chat-text">
               {{message.message}}
-            </div>
-            <!-- /.direct-chat-text -->
-          </div>
-          <!-- /.direct-chat-msg -->
-
-          <!-- Message to the right -->
-          <div class="direct-chat-msg right" *ngIf="alignMessage(message.toUserId)">
-            <div class="direct-chat-info clearfix">
-              <span class="direct-chat-name pull-right">me</span>
-              <span class="direct-chat-timestamp pull-left">{{message.timestamp}}</span>
-            </div>
-            <!-- /.direct-chat-info -->
-            <img class="direct-chat-img" src="https://bootdey.com/img/Content/user_2.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
-            <div class="direct-chat-text">
-              {{message.message}}
-            </div>
-            <!-- /.direct-chat-text -->
-          </div>
-
-         
-         
-        
-         
-       
-     
-        </div>
-        <!--/.direct-chat-messages-->
-
-        <!-- Contacts are loaded here -->
-        <div class="direct-chat-contacts">
-          <ul class="contacts-list">
-            <li>
-              <a href="#">
-                <img class="contacts-list-img" src="https://bootdey.com/img/Content/user_1.jpg">
-
-                <div class="contacts-list-info">
-                      <span class="contacts-list-name">
-                        Count Dracula
-                        <small class="contacts-list-date pull-right">2/28/2015</small>
-                      </span>
-                  <span class="contacts-list-msg">How have you been? I was...</span>
-                </div>
-                <!-- /.contacts-list-info -->
-              </a>
-            </li>
-            <!-- End Contact Item -->
-          </ul>
-          <!-- /.contatcts-list -->
-        </div>
-        <!-- /.direct-chat-pane -->
-      </div>
-      <!-- /.box-body -->
-      <div class="footer">
-      <div class="container-fluid">
-      <div class="row">
-      <div class="col-md-2">
-      </div>
-      <div class="col-md-10">
-        <form action="#" method="post">
-          <div class="input-group">
-          <!-- Default dropup button -->
-<div class="btn-group dropup">
-  <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <i class="fa fa-plus" aria-hidden="true"></i>
-  </button>
-  <div class="dropdown-menu">
-  <a class="dropdown-item" href="#"><i class="fa fa-paperclip" aria-hidden="true"></i> Code Snippet</a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="#"><i class="fa fa-desktop" aria-hidden="true"></i> Your Computer</a>
-    <!-- Dropdown menu links -->
-  </div>
-</div>
-          
-          
-            <input type="text" name="message" placeholder="Type Message ..." class="form-control" [(ngModel)]="message" 
-						(keyup)="sendMessage($event)">
-                <span class="input-group-btn">
-
-                  <button type="submit" class="btn btn-warning btn-flat" (click)="sendMessageButton()">Send</button>
-                </span>
-          </div>
-        </form>
-        </div>
-      </div>
-      </div>
-      </div>
-      <!-- /.box-footer-->
+              <youtube-player *ngIf='message.id' [videoId]="message.id" (ready)="savePlayer($event)"
+      (change)="onStateChange($event)"
+    ></youtube-player>
+              
+        <div class="card" id="left" *ngIf='message.title' >
+  <div class="vl">
+  <div class="card-block" >
+    <h4 class="card-title">{{message.title}}</h4>
+    
+    
+    <div class="row">
+    <div class=" thumbnail " *ngIf='message.image'>
+<img class="card-img-top"  src="{{message.image}}">
+    </div>
+    <div class="col-md-12" *ngIf='message.description'>
+    <p class="card-text">{{message.description}}</p>
+    </div>
     </div>
 
+    
+  </div>
+  </div>
+
+</div>
+            </div>
+
+            <!-- /.direct-chat-text -->
+
+          </div>
+
+          </div>
+
+          <!-- /.direct-chat-msg -->
+
+          <div class="col-md-4">
+
+          </div>
+
+          </div>
+
+          </div>
+
+          
+
+          <div class="container-fluid">
+
+          <div class="row">
+
+          <div class="col-md-4">
+
+          </div>
+
+          <!-- Message to the right -->
+
+          <div class="col-md-8">
+
+          <div class="direct-chat-msg right" *ngIf="alignMessage(message.toUserId)">
+
+            <div class="direct-chat-info clearfix">
+
+              <span class="direct-chat-name pull-right">me</span>
+
+              <span class="direct-chat-timestamp pull-left">{{message.timestamp}}</span>
+
+            </div>
+
+            <!-- /.direct-chat-info -->
+
+            <img class="direct-chat-img" src="https://bootdey.com/img/Content/user_2.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
+
+            <div class="direct-chat-text">
+              {{message.message}}
+              <youtube-player *ngIf='message.id' [videoId]="message.id" (ready)="savePlayer($event)"
+      (change)="onStateChange($event)"
+    ></youtube-player>
+              
+        <div class="card" id="card" *ngIf='message.title' >
+  <div class="vl">
+  <div class="card-block" >
+    <h4 class="card-title">{{message.title}}</h4>
+    
+    
+    <div class="row">
+    <div class="col-md-12" *ngIf='message.image'>
+<img class="card-img-top"  src="{{message.image}}">
+    </div>
+    <div class="col-md-12" *ngIf='message.description'>
+    <p class="card-text">{{message.description}}</p>
+    </div>
+    </div>
+
+    
+  </div>
+  </div>
+
+</div>
+            </div>
+
+            <!-- /.direct-chat-text -->
+
+          </div>
+
+          </div>
+
+          <!-- /.direct-chat-msg -->
+
+          </div>
+
+          </div>
+
+          
+
+    
+
+        </div>
+
+        <!--/.direct-chat-messages-->
+
+
+
+        <!-- /.direct-chat-pane -->
+
+      </div>
+
+      <!-- /.box-body -->
+
+      </div>
+
+      <div class="footer">
+
+      <div class="container-fluid">
+
+      <div class="row">
+
+      <div class="col-md-2">
+
+      </div>
+
+      <div class="col-md-10">
+
+        <form action="#" method="post">
+
+          <div class="input-group container-fluid">
+
+          <!-- Default dropup button -->
+
+<div class="btn-group dropup">
+
+  <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+    <i class="fa fa-plus" aria-hidden="true"></i>
+
+  </button>
+
+  <div class="dropdown-menu">
+
+  <a class="dropdown-item" href="#"><i class="fa fa-paperclip" aria-hidden="true"></i> Code Snippet</a>
+
+    <div class="dropdown-divider"></div>
+
+    <a class="dropdown-item" href="#"><i class="fa fa-desktop" aria-hidden="true"></i> Your Computer</a>
+
+    <!-- Dropdown menu links -->
+
+  </div>
+
+</div>
+
+<button class="btn btn-secondary"  data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-video-camera" aria-hidden="true"></i></button>
+
+          
+
+          
+
+            <input type="text" name="message" placeholder="Type Message ..." class="form-control" [(ngModel)]="message" 
+            (keyup)="sendMessage($event)">
+
+                <span class="input-group-btn">
+
+
+
+                  <button type="submit" class="btn btn-warning btn-flat" (click)="sendMessageButton()">Send</button>
+
+                </span>
+
+          </div>
+
+        </form>
+
+        </div>
+
+      </div>
+
+      </div>
+
+      </div>
+
+      <!-- /.box-footer-->
+
+    </div>
 
     <!--/.direct-chat -->
+
   </div>
-  
-  
-  
-  
+
+</div>
+
+</body>
+<!-- Large modal -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+     <div class="modal-content">
+      <div class="modal-header modal-lg">
+        <h5 class="modal-title" id="exampleModalLabel">Video Call</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-video-call></app-video-call>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Reject</button>
+        <button type="button" class="btn btn-primary">Receive Call</button>
+ -->      </div>
+    </div>
+  </div>
 </div>
 
 
-</body>
+

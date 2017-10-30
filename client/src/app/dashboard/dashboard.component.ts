@@ -6,6 +6,8 @@ import { ActivatedRoute ,Router } from '@angular/router';
 import { SocketService } from './../socket.service';
 import { HttpService } from './../http.service';
 import { ChatService } from './../chat.service';
+import {GetInfoService} from './../shared/get-info.service';
+
 /* Importing services ends*/
 @Component({
 	selector: 'app-dashboard',
@@ -37,17 +39,18 @@ private currentRoute=null;
 private chatListUsers = [];
 isSocketConnected:boolean = false;
 userData:any;
-
+flag:any;
 /*
 * Chat and message related variables ends
 */
 constructor(private chatService : ChatService,
 	private socketService : SocketService,
 	private route :ActivatedRoute,
-	private router :Router,private httpService:HttpService) { }
+	private router :Router,private httpService:HttpService,private genService:GetInfoService) { }
 	
 ngOnInit() {
 
+//this.flag=this.genService.getFlag();
 console.log("URL",this.router.url);
 /*
 * getting userID from URL using 'route.snapshot'
@@ -75,6 +78,10 @@ this.chatService.userSessionCheck(this.userId,( error, response )=>{
 * making socket connection by passing UserId.
 */	
  this.isSocketConnected = this.socketService.connectSocket(this.userId);
+ this.socketService.getFlag().subscribe((result)=>{
+		console.log("kjnxkjncik",result);
+	});
+
 
 /*
 * calling method of service to get the chat list.
@@ -189,4 +196,20 @@ isUserSelected(userId:string):boolean{
 			this.router.navigate(['/login']); /* Home page redirection */
 		});
 	}
+	selectOfflineUsers(user):void{
+		console.log("$$$$$$$$$$$$$",user);
+		this.userData={
+		userId: this.userId,
+		selectedUserId :user._id,
+		selectedSocketId :user.socketId,
+		selectedUserName :user.username,
+		status:'offline'
+	};
+	this.router.navigate(['chats'],{relativeTo: this.route, queryParams: this.userData});
+
+		//this.router.navigate([this.currentRoute+'/chats'],{ queryParams: user, skipLocationChange: true});
+
+
+	}
+
 }

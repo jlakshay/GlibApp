@@ -176,8 +176,7 @@ var Routes = /** @class */ (function () {
         */
         this.app.get('*', function (request, response) {
             //response.sendFile(path.join(__dirname,'../dist/index.html'));
-            response.send("Route not found");
-
+            response.send("hello world");
         });
     };
     Routes.prototype.routesConfig = function () {

@@ -5,7 +5,7 @@ export class GeneralChatService {
     private url = 'http://localhost:4000';
     private socket;
 
-
+    getMessageObservable: any;
     constructor() {
 
 
@@ -16,6 +16,17 @@ export class GeneralChatService {
                 console.log("getchatRoom",chatRoom);
                 // observer.next(chatRoom);
             });
+          this.getMessageObservable = Observable.create((observer) => {
+                this.socket.on('new-message', (message) => {
+                    console.log("message in object form",message);
+                    observer.next(message);
+                });
+            });
+           
+
+          
+
+          this.getMessages();
     }
 
     public sendMessage(message) {
@@ -83,6 +94,18 @@ if(data){
         console.log("inside service getChat Room");
           return Observable.create((observer) => {
           
+        });
+    }
+
+     public sendCode(code) {
+        this.socket.emit('new-code', code);
+    }
+
+    public getCode = () => {
+        return Observable.create((observer) => {
+            this.socket.on('codes', (code) => {
+                observer.next(code);
+            });
         });
     }
 }

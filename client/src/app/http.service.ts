@@ -13,8 +13,8 @@ export class HttpService {
   	/* 
 	* specifying Base URL.
 	*/
-    private BASE_URL = 'http://localhost:4000/';
- 
+   private BASE_URL = 'http://localhost:4000/';
+   //private BASE_URL = 'http://192.168.252.186:4000/';
     /* 
 	* Setting the Request headers.
 	*/
@@ -59,4 +59,11 @@ export class HttpService {
         .map( (response:Response) => response.json())
         .catch( (error:any) => Observable.throw(error.json().error || `Server error`) );
     }
+
+  public scraping(data):Observable<any>{
+  console.log("url is", data)
+    const url='http://localhost:4000/unfurl';      //Setting the url
+    return(this.http).post(url,{url : data},this.headerOptions)        //Calling the http request
+    .map((response:Response)=>response.json());        //Mapping the response
+  }
 }

@@ -19,10 +19,14 @@ export class ChatsComponent implements OnInit, AfterViewInit{
 	private userId:any;
 	private socketId:any;
 	private selectedSocketId:any;
+	private status:any='online';
 	private selectedUserId: any
 	private chatListUsers:any =[];
 	private message:any;
 	private messages:any = [];
+	url:any;
+	scrapingData:any={};
+	sendData:any={};
 	/*
 	* Chat and message related variables ends
 	*/
@@ -30,6 +34,13 @@ export class ChatsComponent implements OnInit, AfterViewInit{
   	private chatService : ChatService,
 		private socketService : SocketService,
 		private router :Router) { }
+
+  player: YT.Player;
+    savePlayer (player) {
+    this.player = player;
+   // console.log('player instance', player)
+    }
+
 
   ngOnInit() {
 
@@ -42,6 +53,14 @@ export class ChatsComponent implements OnInit, AfterViewInit{
       this.userName=params["selectedUserName"];
        this.userId=params["userId"];
        this.selectedSocketId=params["selectedSocketId"];
+       localStorage.setItem("sid",this.selectedUserId);
+       localStorage.setItem("id",this.userId);
+       if(params["status"]!=undefined){
+       	console.log("inside stauts params")
+       this.status=params["status"];
+   }
+       console.log("status!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1",this.status);
+
        //this.socketService.connectSocket(this.userId);
   	
   	this.chatService.getMessages({ userId : this.userId,toUserId :this.selectedUserId} , ( error , response)=>{
@@ -49,12 +68,19 @@ export class ChatsComponent implements OnInit, AfterViewInit{
 				console.log("get message response",response.messages)
 				let  aa=response.messages.map((i)=>{
 					i.timestamp=new Date(i.timestamp*1000).toLocaleString();
-					return i;
-				});
-				console.log("new timestamp",aa);
-				this.messages = response.messages;
-
-			}
+					console.log(i, 'check message');
+					if(i.message.includes('https://youtu.be/')==true){
+    						i.id=i.message.substr(17);
+    						console.log(i.id, 'check id');
+    					}else{
+    						i.id=null;
+    					}
+    					return i;    				
+    			});
+    				this.messages = response.messages;
+    				console.log('check messages', this.messages)    
+    				}			
+    		
 		});
 
 
@@ -75,19 +101,83 @@ export class ChatsComponent implements OnInit, AfterViewInit{
 							response.timestamp=newDate;
 							console.log("date",newDate);
 			    		if(this.selectedUserId && this.selectedUserId == response.fromUserId) {
-			    			this.messages.push(response);
-			    			setTimeout( () =>{
-			    					document.querySelector(`.message-thread`).scrollTop = document.querySelector(`.message-thread`).scrollHeight;
-			    			},100);
+					console.log(response, 'hellooooo');
+					this.sendData=response;
+					console.log(this.sendData);
+					if(this.sendData.message.includes('https://youtu.be/')==true){
+    						this.sendData.id=this.sendData.message.substr(17);
+    						console.log(response.id, 'check id');
+    					}else{
+    						this.sendData.id=null;
+    					}
+    				this.messages.push(this.sendData);
+    				console.log('check messages', this.messages) ;  
 			    		}
 			    	});
-
   	}
 
 
 
 
-	sendMessageButton(){
+	  	sendMessageButton(){
+	  		console.log(2);
+	  		let data:any={};
+	  		data = {
+	  			fromUserId : this.userId,
+	  			message : (this.message).trim(),
+	  			toUserId : this.selectedUserId,
+	  			toSocketId : this.selectedSocketId,
+	  			fromSocketId : this.socketId,
+	  			msg_status:this.status
+	  		}
+console.log(1, data);
+	  		if(data.message.includes('https://youtu.be/')==true){
+	  			console.log(1);
+	  			data.id=data.message.substr(17);
+	  			this.messages.push(data);
+	  			this.message = null;
+
+	  			this.socketService.sendMessage(data);
+	  		}else if(data.message.includes('https:')==true || data.message.includes('http:')==true){
+	  			this.url=data.message.substring(data.message.indexOf('http'));
+	  			this.chatService.scraping(this.url, ( error , response)=>{
+	  				console.log('at response', 5);
+	  				if(!response.error) {
+	  					this.scrapingData=response;
+	  					data.title=this.scrapingData.other.title;
+	  					data.description=this.scrapingData.other.description;
+	  					if(this.scrapingData.ogp==undefined){
+	  						this.messages.push(data);
+	  						console.log(this.messages, "check array");
+	  						this.message = null;
+	  						this.socketService.sendMessage(data);
+	  					}else{
+	  						if(this.scrapingData.ogp.ogImage[0].url==undefined){
+	  							data.image=this.scrapingData.twitter.twitterImage[0].url;
+	  						}else{
+	  							data.image=this.scrapingData.ogp.ogImage[0].url;
+	  						}
+	  						this.messages.push(data);
+	  						console.log(this.messages, "check array");
+	  						this.message = null;
+	  						this.socketService.sendMessage(data);
+	  					}
+	  				}
+	  			})
+	  		}else{
+	  			console.log(data, 'in else');
+	  			this.messages.push(data);
+	  			this.message = null;
+
+	  			this.socketService.sendMessage(data);
+	  		}
+	  	}
+
+
+
+
+
+/*	sendMessageButton(){
 		const data = {
 						fromUserId : this.userId,
 						message : (this.message).trim(),
@@ -104,7 +194,7 @@ export class ChatsComponent implements OnInit, AfterViewInit{
 					this.socketService.sendMessage(data);
 				
 	}
-
+*/
 
 	sendMessage(event){
 		if(event.keyCode === 13) {
@@ -120,23 +210,52 @@ export class ChatsComponent implements OnInit, AfterViewInit{
 					alert(`Select a user to chat.`);
 				}else{
 
-					const data = {
+					let data:any = {
 						fromUserId : this.userId,
 						message : (this.message).trim(),
 						toUserId : this.selectedUserId,
 						toSocketId : this.selectedSocketId,
-						fromSocketId : this.socketId
+						fromSocketId : this.socketId,
+						msg_status:this.status
 					}
-					this.messages.push(data);
-					setTimeout( () =>{
-	    					document.querySelector(`.message-thread`).scrollTop = document.querySelector(`.message-thread`).scrollHeight;
-	    			},100);
-					
-					/* 
-					* calling method to send the messages
-					*/
-					this.message = null;
-					this.socketService.sendMessage(data);
+					if(data.message.includes('https://youtu.be/')==true){
+	  			this.messages.push(data);
+	  			this.message = null;
+
+	  			this.socketService.sendMessage(data);
+	  		}else if(data.message.includes('https:')==true || data.message.includes('http:')==true){
+	  			this.url=data.message.substring(data.message.indexOf('http'));
+	  			this.chatService.scraping(this.url, ( error , response)=>{
+	  				console.log('at response', 5);
+	  				if(!response.error) {
+	  					this.scrapingData=response;
+	  					data.title=this.scrapingData.other.title;
+	  					data.description=this.scrapingData.other.description;
+	  					if(this.scrapingData.ogp==undefined){
+	  						this.messages.push(data);
+	  						console.log(this.messages, "check array");
+	  						this.message = null;
+	  						this.socketService.sendMessage(data);
+	  					}else{
+	  						if(this.scrapingData.ogp.ogImage[0].url==undefined){
+	  							data.image=this.scrapingData.twitter.twitterImage[0].url;
+	  						}else{
+	  							data.image=this.scrapingData.ogp.ogImage[0].url;
+	  						}
+	  						this.messages.push(data);
+	  						console.log(this.messages, "check array");
+	  						this.message = null;
+	  						this.socketService.sendMessage(data);
+	  					}
+	  				}
+	  			})
+	  		}else{
+	  			console.log(data, 'in else');
+	  			this.messages.push(data);
+	  			this.message = null;
+
+	  			this.socketService.sendMessage(data);
+	  		}
 				}
 			}
 		}

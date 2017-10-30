@@ -479,12 +479,9 @@ header.masthead {
     margin-top: 0; }
 
 section#contact {
-  height: 720px;
-  /*background-color: #212529;*/
-  background-image: url("../../assets/background.jpg");
+  background-color: #212529;
+  background-image: url("../../assets/map-image.png");
   background-repeat: no-repeat;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
   background-position: center; }
   section#contact .section-heading {
     color: #fff; }

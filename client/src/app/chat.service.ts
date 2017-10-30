@@ -66,6 +66,20 @@ export class ChatService {
                   }
               );
     }
+     /*Method for scraping*/
+
+    public scraping(params, callback):any{
+        this.httpService.scraping(params).subscribe(
+                  response => {
+                    console.log(response, 'in chat service');
+                      callback(false,response);
+                  },
+                  error => {
+                      callback(true,'HTTP fail.');
+                  }
+              );
+    }
+
  
  
     /* 

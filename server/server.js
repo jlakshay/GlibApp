@@ -2,6 +2,7 @@
 var express = require("express");
 var http = require('http');
 var socketio = require('socket.io');
+var peer=require('peer');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var socketEvents = require('./utils/socket');
@@ -13,11 +14,6 @@ var userNameCheck = require('./routes/userNameCheck');
 var login = require('./routes/login');
 var generalChats = require('./routes/generalChat');
 var messages = require('./routes/messages');
-var verification = require('./routes/otp/verification');
-var forget = require('./routes/forgotPassword');
-var getUserInfo = require('./routes/getUserInfo');
-var updateUserData = require('./routes/updateUserData');
-
 
 var users = require('./routes/users');
 
@@ -32,11 +28,6 @@ var Server = /** @class */ (function () {
     }
     Server.prototype.appConfig = function () {
         this.app.use(bodyParser.json());
-
-        this.app.use(bodyParser.urlencoded({
-        extended: false
-        }));
-
         this.app.use(cors());
         new config(this.app);
         this.app.use('/registerUser', register);
@@ -45,13 +36,8 @@ var Server = /** @class */ (function () {
         this.app.use('/login', login);
         this.app.use('/generalChats', generalChats);
         this.app.use('/getMessages', messages);
-
-        this.app.use('/otpVerify',verification);
-        this.app.use('/forgotPass',forget);
-        this.app.use('/getUserInfo',getUserInfo);
-        this.app.use('/updateUserData',updateUserData);
-
         this.app.use('/users', users);
+        this.app.use('/peerjs',peer.ExpressPeerServer(this.app,{debug:true}));
 
     };
     /* Including app Routes starts*/

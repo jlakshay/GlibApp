@@ -11,9 +11,10 @@ export class SocketService {
 	/* 
 	* specifying Base URL.
 	*/
-	private BASE_URL = 'http://localhost:4000/'; 
+	private BASE_URL = 'http://localhost:4000/';
+	// private BASE_URL = 'http://192.168.252.186:4000/'; 
   	private socket;
-
+  	socketFlag;
   	getSocket() {
   		return this.socket;
   	}
@@ -91,5 +92,24 @@ export class SocketService {
 		}) 
 		return observable;
 	} 
+	setFlag(flag){
+		console.log("set flag service ",flag);
+		this.socket.emit('flag',flag);
+
+	}
+	getFlag(){
+		console.log("service getfilag ")
+		let observable = new Observable(observer => {
+			this.socket.on('flag-response', (data) => {
+				observer.next(data); 
+			});
+ 
+			return () => {
+				this.socket.disconnect();
+			}; 
+		}) 
+		return observable;
+
+	}
  
 }
