@@ -110,6 +110,27 @@ else{
                     });
                 }
             });
+
+
+
+
+socket.on('user-list', function (data) {
+    console.log("socket user list")
+                var chatListResponse = {};
+                helper.getUsers(function (err, response) {
+                            console.log("response of get User",response)
+                            socket.broadcast.emit('user-list-response',response);
+
+                        });
+                    });
+                
+            
+
+
+
+
+
+
             /**
             * send the messages to the user
             */

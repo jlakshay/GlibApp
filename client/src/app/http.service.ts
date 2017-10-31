@@ -53,17 +53,18 @@ export class HttpService {
 	    	.map( (response:Response) => response.json())
 	      	.catch( (error:any) => Observable.throw(error.json().error || `Server error`) );
 	}
-  public getAllUsers(){
-    console.log("inside http service");
-      return this.http.get(`${this.BASE_URL}users`)
-        .map( (response:Response) => response.json())
-        .catch( (error:any) => Observable.throw(error.json().error || `Server error`) );
-    }
-
+  
   public scraping(data):Observable<any>{
   console.log("url is", data)
     const url='http://localhost:4000/unfurl';      //Setting the url
     return(this.http).post(url,{url : data},this.headerOptions)        //Calling the http request
     .map((response:Response)=>response.json());        //Mapping the response
   }
+  public resetFlag(data):Observable<any>{
+  console.log("url is", data)
+    const url='http://localhost:4000/users';      //Setting the url
+    return(this.http).put(url, data)        //Calling the http request
+    .map((response:Response)=>response.json());        //Mapping the response
+  }
+
 }

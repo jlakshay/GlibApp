@@ -14,8 +14,11 @@ var userNameCheck = require('./routes/userNameCheck');
 var login = require('./routes/login');
 var generalChats = require('./routes/generalChat');
 var messages = require('./routes/messages');
-
 var users = require('./routes/users');
+var verification = require('./routes/otp/verification');
+var forget = require('./routes/forgotPassword');
+var getUserInfo = require('./routes/getUserInfo');
+var updateUserData = require('./routes/updateUserData');
 
 
 var Server = /** @class */ (function () {
@@ -38,7 +41,10 @@ var Server = /** @class */ (function () {
         this.app.use('/getMessages', messages);
         this.app.use('/users', users);
         this.app.use('/peerjs',peer.ExpressPeerServer(this.app,{debug:true}));
-
+        this.app.use('/otpVerify',verification);
+        this.app.use('/forgotPass',forget);
+        this.app.use('/getUserInfo',getUserInfo);
+        this.app.use('/updateUserData',updateUserData);
     };
     /* Including app Routes starts*/
     Server.prototype.includeRoutes = function () {

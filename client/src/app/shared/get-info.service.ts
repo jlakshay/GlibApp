@@ -5,31 +5,23 @@ import expressUrls from './config/url';
 import 'rxjs/add/operator/map';
 @Injectable()
 export class GetInfoService {
-	flag:any=0;
   constructor(private http: Http) { }
 public fetchInfo(email:string): Observable<any>{
 	//let d = localStorage.getItem('tempuser.Email')
-	
+	console.log(email,"fetchInfo")
 	//const url="http://localhost:3000/getUserInfo/"+email;
 	return this.http
-	.get(expressUrls.getUserInfo+email)
+	.post(expressUrls.getUserInfo,{"id":email})
 	.map((res:Response)=><any>res.json());
 }
 
 public fetchProfilePicture(email):Observable<any>{
 	//let d = localStorage.getItem('tempuser.Email')
-	
+	console.log(email,"fetchPicture")
 	//const url="http://localhost:3333/";
 	return this.http
-	.get(expressUrls.getUserInfoPhoto+email)
+	.post(expressUrls.getUserInfoPhoto,{"id":email})
 	//.map((res:Response)=><any>res.json());
-}
-
-public setFlag(flag){
-this.flag=flag;
-}
-public getFlag(){
-	return this.flag;
 }
 
 }

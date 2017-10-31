@@ -999,11 +999,7 @@
     min-width: 70%;
     margin-top: 10px;
     word-wrap: break-word;
-<<<<<<< HEAD
-    background-color: #fff;
-=======
     background-color: rgba(255, 255, 255, 0);
->>>>>>> c1c43bb6e21daf6a337833c97c741bf8bf79ab1b
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, 0);
     border-radius: .25rem;

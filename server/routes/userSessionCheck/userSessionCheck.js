@@ -25,6 +25,7 @@ module.exports=(request,response) =>{
 
 	           			sessionCheckResponse.error = false;
 	           			sessionCheckResponse.username = result.username;
+	           			sessionCheckResponse.reciever=result.reciever;
 	            		sessionCheckResponse.message = `User logged in.`;
 	           			response.status(200).json(sessionCheckResponse);
 	           		}

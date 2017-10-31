@@ -12,13 +12,12 @@
 
 
 			<ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-<a class="nav-link"> <!-- routerLink="/dashboard"
--->            <!-- <i class=" fa fa-fw fa-dashboard"></i> -->
-<span class="nav-link-text" >{{username}}</span>
+<a class="nav-link"> 
+<span class="nav-link-text" [routerLink]="'/dashboard/accountSettings'" >{{username}}</span>
 </a>
 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-<a class="nav-link"> <!-- routerLink="/dashboard"
--->            <!-- <i class=" fa fa-fw fa-dashboard"></i> -->
+<a class="nav-link"  routerLink="/dashboard/general">
+         
 <span class="nav-link-text" >#General</span>
 </a>
 </li>
@@ -56,15 +55,22 @@
 						>
 
 	<a class="nav-link"><i class="fa fa-user" aria-hidden="true"></i> {{ user.username}}  <i class="fa fa-circle" aria-hidden="true" id=fontAw></i>
-	</a>   
+	</a> 
+<div *ngIf="reciever.includes(user._id)">
+	<span class="badge badge-danger" *ngIf="flagArray[reciever.indexOf(user._id)]">{{flagArray[reciever.indexOf(user._id)]}}</span>  
+</div>
 </li>
 <span class="nav-link-text" >Offline users</span>
+
 <li *ngFor="let user of offlineUsers" 
 
 						>
 
 	<a class="nav-link" (click)="selectOfflineUsers(user)"><i class="fa fa-user" aria-hidden="true"></i> {{ user.username}}  
-	</a>   
+	</a>
+	<div *ngIf="reciever.includes(user._id)">
+	<span class="badge badge-danger" *ngIf="flagArray[reciever.indexOf(user._id)]">{{flagArray[reciever.indexOf(user._id)]}}</span>   
+	</div> 
 </li>
 <li>
 

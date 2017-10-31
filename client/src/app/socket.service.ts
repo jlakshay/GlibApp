@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
  
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
  
 import * as io from 'socket.io-client';
  
@@ -19,7 +20,7 @@ export class SocketService {
   		return this.socket;
   	}
  
-  	constructor() {}
+  	constructor(private http:Http) {}
  
   	/* 
 	* Method to connect the users to socket
@@ -33,8 +34,11 @@ export class SocketService {
 	* Method to emit the add-messages event.
 	*/
 	sendMessage(message:any):void{
-		console.log("inside socket service",message);
+		console.log("inside socket service111111111111111111111111111111");
 		this.socket.emit('add-message', message);
+		console.log("inside send message");
+	 this.http.post('http://localhost:4000/users',{"fromId":message.fromUserId,"toId":message.toUserId})        //Calling the http request
+    .map((response:Response)=>response.json()).subscribe((res)=>console.log("response of flag###################################",res));
 	}
  
 	/* 
@@ -78,6 +82,7 @@ export class SocketService {
 	* Method to receive chat-list-response event.
 	*/
 	getChatList(userId:string):any {
+		console.log("Socket in get online",this.socket);
  
 		this.socket.emit('chat-list' , { userId : userId });
  
@@ -92,15 +97,16 @@ export class SocketService {
 		}) 
 		return observable;
 	} 
-	setFlag(flag){
-		console.log("set flag service ",flag);
-		this.socket.emit('flag',flag);
 
-	}
-	getFlag(){
-		console.log("service getfilag ")
+
+
+	getUserList(userId:string):any {
+ console.log("this is socket for get all users",userId);
+ console.log("Socket in get all",this.socket);
+		this.socket.emit('user-list' , { userId : userId });
+ 
 		let observable = new Observable(observer => {
-			this.socket.on('flag-response', (data) => {
+			this.socket.on('user-list-response', (data) => {
 				observer.next(data); 
 			});
  
@@ -109,7 +115,9 @@ export class SocketService {
 			}; 
 		}) 
 		return observable;
+	} 
 
-	}
+
+	
  
 }

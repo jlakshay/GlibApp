@@ -1,5 +1,6 @@
 const helper = require('../../utils/helper');
 module.exports=(request,response) =>{
+  console.log("inside setflag",request.body);
 	var data={
       toId:request.body.toId,
 	 		fromId:request.body.fromId

@@ -32,8 +32,11 @@ export class GeneralComponent implements OnInit {
  Javascript:any="Javascript";
  language:string;
  data:any={};
- dbmessage:any;
+ dbmessage:any={};
  c:any="c";
+ url:any;
+ scrapingData:any={};
+ sendData:any={};
 
  constructor(private generalChatService: GeneralChatService,private generalService:GeneralService,
    private chatService : ChatService,
@@ -43,14 +46,14 @@ export class GeneralComponent implements OnInit {
 
 
    this.generalChatService.getMessageObservable.subscribe((message)=>{
-     console.log("Message is here", message);
+     //console.log("Message is here", message);
      this.socketmessage=message; 
      this.allGeneralMessages.push(this.socketmessage);
-     console.log("mes",this.allGeneralMessages);
+     //console.log("mes",this.allGeneralMessages);
    })
 
    this.generalChatService.getCodeObservable.subscribe((code)=>{
-     console.log("code is here", code);
+     //console.log("code is here", code);
      var codemodified={
       "username":code.username,
        "code":{
@@ -60,41 +63,138 @@ export class GeneralComponent implements OnInit {
         }
 
      }
-     console.log("modified code object",codemodified);
+     //console.log("modified code object",codemodified);
      this.socketcode=codemodified; 
 
-console.log("this is socket code to be pushed",this.socketcode);
+//console.log("this is socket code to be pushed",this.socketcode);
 
      this.allGeneralMessages.push(this.socketcode);
 
-     console.log("message code",this.allGeneralMessages);
-console.log("mes",this.allGeneralMessages);
+  //   console.log("message code",this.allGeneralMessages);
+//console.log("mes",this.allGeneralMessages);
 
    })
  }
 
+player: YT.Player;
+   savePlayer (player) {
+   this.player = player;
+ 
+   }
 //---------------------------------------------- callback in messages start--------------------------------------------//
 
  sendMessage(callback=()=>{
-    if(this.message!='')
-    {
-    this.dbmessage=this.message;
-    this.message='';
-    }
+console.log(this.message, 'in start of this.message');
+      if(this.message!='')
+
+      {
+
+        this.dbmessage.message=this.message;
+
+  //      console.log(this.dbmessage, 'check dbmessage');
+
+        this.message='';
+
+      }
 
 
-    console.log("*****************");
-    
-//------------------------------------------------saves the message to db--------------------------------------------//
 
-    this.generalService.saveMessage(this.username,this.dbmessage)
+      if(this.dbmessage.message.includes('https://youtu.be/')==true){
+
+    //    console.log(2, 'inside youtube');
+
+        this.dbmessage.id=this.dbmessage.message.substr(17);
+
+        this.messages.push(this.dbmessage);
+
+        this.message = null;
+
+      //  console.log(3, 'youtube data', this.dbmessage);
+
+        this.generalService.saveMessage(this.username,this.dbmessage)
+
+        .subscribe((current: string) => {
+
+          this.socketSave();
+          this.dbmessage={};
+
+        });
+
+      }else if(this.dbmessage.message.includes('https:')==true || this.dbmessage.message.includes('http:')==true){
+
+        //console.log(4, 'inside url');
+
+
+
+        this.url=this.dbmessage.message.substring(this.dbmessage.message.indexOf('http'));
+
+        this.chatService.scraping(this.url, ( error , response)=>{
+
+          //console.log('at response', 5, response);
+
+          if(!response.error) {
+
+            this.scrapingData=response;
+
+            this.dbmessage.title=this.scrapingData.other.title;
+
+            this.dbmessage.description=this.scrapingData.other.description;
+
+            if(this.scrapingData.ogp==undefined){
+
+              this.generalService.saveMessage(this.username,this.dbmessage)
+
+              .subscribe((current: string) => {
+
+                this.socketSave();
+
+                this.dbmessage={};
+
+              });
+
+            }else{
+
+              if(this.scrapingData.ogp.ogImage[0].url==undefined){
+
+                this.dbmessage.image=this.scrapingData.twitter.twitterImage[0].url;
+
+              }else{
+
+                this.dbmessage.image=this.scrapingData.ogp.ogImage[0].url;
+
+              }
+
+            //  console.log(6, 'last url', this.dbmessage);
+
+              this.generalService.saveMessage(this.username,this.dbmessage)
+
+              .subscribe((current: string) => {
+
+                this.socketSave();
+
+                this.dbmessage={};
+
+              });              }
+
+            }
+
+          })
+
+      }else{
+
+        this.generalService.saveMessage(this.username,this.dbmessage)
+
     .subscribe((current: string) => {
-  this.socketSave();
+
+this.socketSave();
 
     });
 
-    console.log("This is after serveice call through compoentr*****************");
     
+
+      }
+
+
 
  })
 
@@ -120,13 +220,14 @@ let data={
 
   // let currentTime = moment().format('hh:mm:ss a');
    this.generalChatService.sendMessage(data);
+   console.log(data, 'data in socketSave');
 
    this.generalChatService.getCurrent()
     .subscribe((current: string) => {
       if(current){
         // this.allGeneralMessages.push(this.socketmessage);
       }
-    console.log("component",current);
+    //console.log("component",current);
     this.currentUser=current;
     });
 
@@ -137,17 +238,22 @@ let data={
  //---------------------------------------------- callback in messages end --------------------------------------------//
 
  }
+
+
+
+
+
  
 // get room name from dropdown and the service
 room(room):any{
  this.chatroom=room;
- console.log(this.chatroom);
+ //console.log(this.chatroom);
  this.generalChatService.chatRoom();
  this.generalChatService.getChatRoom();
 }
 
  sendUserName(){
-   console.log(this.username);
+   //console.log(this.username);
    this.generalChatService.sendUser(this.username);
    this.userfinal=this.username;
    // this.user='';
@@ -161,10 +267,43 @@ room(room):any{
 //getting all the general channel saved messages from the db
 retreive(){
 
-this.generalService.retrieveMessage().subscribe((generalmessage: string) => {
-console.log("received general messages",generalmessage);
+this.generalService.retrieveMessage().subscribe((generalmessage) => {
+
+//console.log("received general messages",generalmessage);
+
+let  aa=generalmessage.map((i)=>{
+i.message.id=null;
+ // console.log(i.message.message);
+
+  if(i.message==undefined){
+
+
+this.getCodeData();
+              
+    
+  }else{
+          if(i.message.message.includes('https://youtu.be/')==true){
+
+                i.message.id=i.message.message.substr(17);
+
+                console.log(i, 'check id');
+
+              }else{
+
+                i.message.id=null;
+
+              }
+            }
+//i.message.id=null;
+              return i;            
+
+          });
+
+//console.log(generalmessage, 'check output');
 
 this.allGeneralMessages=generalmessage;
+
+//console.log(this.allGeneralMessages);
     // this.currentUser=current;
     });
 }
@@ -174,30 +313,30 @@ languageSelect(lang){
 
 this.data.language=lang;
 this.data.username=this.username;
-console.log("Language is = ",this.data.language);
-console.log("This is language select",this.data.username);
+//console.log("Language is = ",this.data.language);
+//console.log("This is language select",this.data.username);
 }
 
 //-------------------------------------------- callback for code start----------------------------------------------------//
 
  sendCodeData(callbackcode=()=>{
 //-------------------------- saving the data to db start-------------------------------------------------------------//
-    console.log("*****************");
+  //  console.log("*****************");
    this.generalService.saveCode(this.data)
    .subscribe((code: string) => {
      this.callbackCodeData();
 
-       console.log("@@@@@@@@@@@save code callback1",code);
+    //   console.log("@@@@@@@@@@@save code callback1",code);
      });
 
-    console.log("This is after serveice call through compoentr*****************");
+//    console.log("This is after serveice call through compoentr*****************");
 
        this.generalChatService.getCurrent()
     .subscribe((current: string) => {
       if(current){
         // this.allGeneralMessages.push(this.socketmessage);
       }
-    console.log("component",current);
+  //  console.log("component",current);
     this.currentUser=current;
     });
 
@@ -217,7 +356,7 @@ callbackCodeData=()=>{
   this.generalChatService.getCode()
       .subscribe((code: string) => {
         this.getCodeData();
-       console.log("@@@@@@@@@@@ socket code component callback2",code);
+    //   console.log("@@@@@@@@@@@ socket code component callback2",code);
 
 
 
@@ -252,7 +391,7 @@ callbackCodeData=()=>{
 getCodeData(){
    this.generalService.getCodeDatas()
       .subscribe((code: string) => {
-       console.log("getting code from mongo",code);
+      // console.log("getting code from mongo",code);
      });
 }
 
@@ -262,7 +401,8 @@ this.retreive();
 
 // this.getCurrentUser()
   
-  this.userId = this.route.snapshot.params['userid'];
+ // this.userId = this.route.snapshot.params['userid'];
+ this.userId=localStorage.getItem('id');
   if(this.userId === '' || typeof this.userId == 'undefined') {
       this.router.navigate(['/']);
     }else{
@@ -276,7 +416,7 @@ this.retreive();
           }else{
             
             this.username = response.username;
-            console.log("##############",this.username);
+        //    console.log("##############",this.username);
             this.sendUserName();
           }
         }
@@ -287,7 +427,7 @@ this.retreive();
      .getMessages()
      .subscribe((message: string) => {
        if(message){
-         this.retreive();
+         // this.retreive();
        }
        
        // let currentTime = moment().format('hh:mm:ss a');
@@ -302,7 +442,7 @@ this.retreive();
        let currentTime = moment().format('hh:mm:ss a');
        let messageWithTimestamp =  `${currentTime}: ${message}`;
        this.serveruser=message;
-       console.log("@@@@@@@@@@@@",this.serveruser);
+       //console.log("@@@@@@@@@@@@",this.serveruser);
      });
 
    

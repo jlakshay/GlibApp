@@ -53,6 +53,20 @@ var Helper = /** @class */ (function () {
         });
     };
 
+    Helper.prototype.resetFlag = function (data, callback) {
+         this.Mongodb.onConnect(function (db, ObjectID) {
+         db.collection('users').update({_id:ObjectID(data.toId),
+                                "reciever":{$elemMatch:{fromId:data.fromId}}},
+                                {$set:{"reciever.$.flag":0}},{strict:false},
+                                function(err,result){
+                                    console.log("incemented falg",result);
+                                     db.close();
+                                  callback(err, result);
+                                }
+                                )
+         });
+    };
+
     Helper.prototype.setFlag = function (data, callback) {
         console.log("inside helper",data);
         this.Mongodb.onConnect(function (db, ObjectID) {
@@ -68,7 +82,35 @@ var Helper = /** @class */ (function () {
                             ,{$addToSet:{"reciever":{"fromId":data.fromId,"flag":1}}},{strict:false}
                             ,function(err,result){
                                 console.log("reciever added",result);
+                                 db.close();
+                             callback(err, result);
                             })
+                    }
+                    else{
+                        console.log("from id array",result.reciever);
+                        let fromIdArray=result.reciever.map(i=>i.fromId);
+                        console.log("filtered array",fromIdArray);
+                        if(fromIdArray.includes(data.fromId)){
+                            db.collection('users').update({_id:ObjectID(data.toId),
+                                "reciever":{$elemMatch:{fromId:data.fromId}}},
+                                {$inc:{"reciever.$.flag":1}},{strict:false},
+                                function(err,result){
+                                    console.log("incemented falg",result);
+                                     db.close();
+                                  callback(err, result);
+                                }
+                                )
+                        }
+                        else{
+                             db.collection("users").update({_id:ObjectID(data.toId)}
+                            ,{$addToSet:{"reciever":{"fromId":data.fromId,"flag":1}}},{strict:false}
+                            ,function(err,result){
+                                console.log("new reciever added",result);
+                                 db.close();
+                              callback(err, result);
+                            })
+
+                        }
                     }
 
                 }
@@ -77,7 +119,6 @@ var Helper = /** @class */ (function () {
             });
         });
     };
-
     /*
     * Name of the Method : userSessionCheck
     * Description : to check if user is online or not.
@@ -153,6 +194,7 @@ var Helper = /** @class */ (function () {
     Helper.prototype.insertMessages = function (data, callback) {
         this.Mongodb.onConnect(function (db, ObjectID) {
             db.collection('messages').insertOne(data, function (err, result) {
+                
                 db.close();
                 callback(err, result);
             });
@@ -177,6 +219,7 @@ var Helper = /** @class */ (function () {
     };
     
     Helper.prototype.getUsers = function (callback) {
+        console.log("inside helper get user method");  
         this.Mongodb.onConnect(function (db, ObjectID) {
             db.collection('users').find({}).toArray(function (err, result) {
                 db.close();
@@ -247,6 +290,68 @@ var Helper = /** @class */ (function () {
             db.collection('users').update(condition, data, function (err, result) {
                 db.close();
                 callback(err, result.result);
+            });
+        });
+    };
+    /*
+    * Name of the Method : verifyForgotPassword
+    * Description : To verify if email exists on database.
+    * Parameter :
+    *       1) email
+    *       2) callback function
+    * Return : callback
+    */
+    Helper.prototype.verifyForgotPassword = function (email, callback) {
+        this.Mongodb.onConnect(function (db, ObjectID) {
+            db.collection('users').findOne({"email": email }, function (err, result) {
+                //console.log(result);
+                db.close();
+                callback(err, result);
+            });
+        });
+    };
+    /*
+    * Name of the Method : forgotPassword
+    * Description : To reset forgotten user Password.
+    * Parameter :
+    *       1) email
+    *       2) passoword
+    *       3) callback function
+    * Return : callback
+    */
+    Helper.prototype.forgotPassword = function (email, password, callback) {
+        this.Mongodb.onConnect(function (db, ObjectID) {
+            db.collection('users').update({"email": email },{$set: {"password":password}}, function (err, result) {
+                db.close();
+                callback(err, result);
+            });
+        });
+    };
+    
+    /*
+    * Name of the Method : upateUserData
+    * Description : To update user data.
+    * Parameter :
+    *       1) email
+    *       2) data
+    *       3) callback function
+    * Return : callback
+    */
+    Helper.prototype.updateUserData = function (params, data, callback) {
+        this.Mongodb.onConnect(function (db, ObjectID) {
+            //console.log(data,objId)
+            //console.log(params.oldPassword)
+            let paramsObj={}
+            console.log(params.oldPassword)
+            if(params.oldPassword){
+                console.log("here")
+                paramsObj={_id:ObjectID(params.id),password:params.oldPassword};
+
+            }
+                else{paramsObj={_id:ObjectID(params.id)};console.log("not here")}
+            db.collection('users').updateOne(paramsObj, data/*,{strict:false, upsert:true}*/, function (err, result) {
+                db.close();
+                callback(err, result);
             });
         });
     };

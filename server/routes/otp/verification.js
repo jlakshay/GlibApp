@@ -50,8 +50,8 @@ const mailOptions = {
   <tr align="center">
   <td style="width: 100%; margin: 0px 10px; line-height: 24px; font-size: 14pt; font-weight: bold; color: #333333
   ;">
-  <h1>Expense Manager</h1>
-  <p style="margin: 0; padding: 0;">One more step to register with us!</p>
+  <h1>Glib App</h1>
+  <p style="margin: 0; padding: 0;">Welcome! One more step to register with us!</p>
   </td>
   </tr>
   <tr align="center">

@@ -1,8 +1,7 @@
 const express = require("express");
-let getUsers=require('./getUsers');
-let router=express.Router();
-router.get('/',getUsers);
 let setFlag=require('./setFlag');
-router.get('/',getUsers);
+let resetFlag=require('./resetFlag');
+let router=express.Router();
 router.post('/',setFlag);
+router.put('/',resetFlag);
 module.exports=router;

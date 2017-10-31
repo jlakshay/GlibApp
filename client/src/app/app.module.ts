@@ -29,6 +29,9 @@ import { MailotpService} from './shared/mailotp.service';
 import { YoutubePlayerModule } from 'ng2-youtube-player';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
+import { ForgetPassComponent} from './forget-pass/forget-pass.component';
+import { SetPasswordComponent} from './set-password/set-password.component'; 
+import { AccountSettingsComponent } from './account-settings/account-settings.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,10 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
     GeneralComponent,
     ChatsComponent,
     VideoCallComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    AccountSettingsComponent,
+    ForgetPassComponent,
+    SetPasswordComponent
   ],
   imports: [
     BrowserModule,

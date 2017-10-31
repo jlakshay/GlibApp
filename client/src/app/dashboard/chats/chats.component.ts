@@ -4,9 +4,6 @@ import { ActivatedRoute ,Router } from '@angular/router';
 import { SocketService } from './../../socket.service';
 import { HttpService } from './../../http.service';
 import { ChatService } from './../../chat.service';
-
-import {GetInfoService} from './../../shared/get-info.service';
-
 @Component({
   selector: 'app-chats',
   templateUrl: './chats.component.html',
@@ -30,19 +27,18 @@ export class ChatsComponent implements OnInit, AfterViewInit{
 	url:any;
 	scrapingData:any={};
 	sendData:any={};
-
 	/*
 	* Chat and message related variables ends
 	*/
   constructor(private route: ActivatedRoute,
   	private chatService : ChatService,
 		private socketService : SocketService,
-		private router :Router,private genService:GetInfoService) { }
-
+		private router :Router) { }
 
   player: YT.Player;
     savePlayer (player) {
     this.player = player;
+   // console.log('player instance', player)
     }
 
 
@@ -57,28 +53,20 @@ export class ChatsComponent implements OnInit, AfterViewInit{
       this.userName=params["selectedUserName"];
        this.userId=params["userId"];
        this.selectedSocketId=params["selectedSocketId"];
-
+       localStorage.setItem("sid",this.selectedUserId);
+       localStorage.setItem("id",this.userId);
        if(params["status"]!=undefined){
        	console.log("inside stauts params")
        this.status=params["status"];
    }
        console.log("status!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1",this.status);
 
-       localStorage.setItem("sid",this.selectedUserId);
-       localStorage.setItem("id",this.userId);
-
        //this.socketService.connectSocket(this.userId);
-  	let counter=0;
-
+  	
   	this.chatService.getMessages({ userId : this.userId,toUserId :this.selectedUserId} , ( error , response)=>{
 			if(!response.error) {
 				console.log("get message response",response.messages)
 				let  aa=response.messages.map((i)=>{
-
-					if(i.msg_status=='offline')
-					{
-						counter++;
-					}
 					i.timestamp=new Date(i.timestamp*1000).toLocaleString();
 					console.log(i, 'check message');
 					if(i.message.includes('https://youtu.be/')==true){
@@ -89,11 +77,7 @@ export class ChatsComponent implements OnInit, AfterViewInit{
     					}
     					return i;    				
     			});
-
-    			//this.genService.setFlag(counter);
-    			this.socketService.setFlag(counter);
-
-   				this.messages = response.messages;
+    				this.messages = response.messages;
     				console.log('check messages', this.messages)    
     				}			
     		
@@ -110,9 +94,6 @@ export class ChatsComponent implements OnInit, AfterViewInit{
   	{
 
   		this.socketService.receiveMessages().subscribe(response => {
-
-  			console.log("Recieverd messages @@@@@@@@@@@@@@@@@@@",response);
-
 			    		
 			    		var date = new Date((response.timestamp*1000));
 			    		var newDate=date.toLocaleString();
@@ -120,12 +101,6 @@ export class ChatsComponent implements OnInit, AfterViewInit{
 							response.timestamp=newDate;
 							console.log("date",newDate);
 			    		if(this.selectedUserId && this.selectedUserId == response.fromUserId) {
-
-			    			this.messages.push(response);
-			    			//setTimeout( () =>{
-			    			//		document.querySelector(`.message-thread`).scrollTop = document.querySelector(`.message-thread`).scrollHeight;
-			    			//},100);
-
 					console.log(response, 'hellooooo');
 					this.sendData=response;
 					console.log(this.sendData);
@@ -147,7 +122,6 @@ export class ChatsComponent implements OnInit, AfterViewInit{
 	  	sendMessageButton(){
 	  		console.log(2);
 	  		let data:any={};
-	  		console.log("inside send button",this.status)
 	  		data = {
 	  			fromUserId : this.userId,
 	  			message : (this.message).trim(),
@@ -242,7 +216,6 @@ console.log(1, data);
 						toUserId : this.selectedUserId,
 						toSocketId : this.selectedSocketId,
 						fromSocketId : this.socketId,
-
 						msg_status:this.status
 					}
 					if(data.message.includes('https://youtu.be/')==true){

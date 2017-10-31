@@ -61,7 +61,8 @@ export class LoginComponent{
                 }else{
                     if(!result.error) {
                         // this.router.navigate(['/home/'+result.userId]);
-                        this.router.navigate(['/dashboard/'+result.userId]);
+                        localStorage.setItem("id",result.userId)
+                        this.router.navigate(['/dashboard/']);
 
                     }else{
                         alert(`Invalid Credentials`);

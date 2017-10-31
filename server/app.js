@@ -35,7 +35,6 @@ app.use('/otpVerify',verification);
 app.use('/unfurl',scraping);
 
 var serverInstance=server.listen(4000);
-console.log("Server running on port 4000");
 app.use('/peerjs',peer.ExpressPeerServer(serverInstance,{debug:true}));
 socket = socketio(server);
 new socketEvents(socket).socketConfig();
